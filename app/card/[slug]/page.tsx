@@ -77,6 +77,7 @@ function initials(firstName: string, lastName: string, company: string) {
   const fromName = `${firstName} ${lastName}`
     .trim()
     .split(" ")
+    .filter(Boolean)
     .map((word) => word[0])
     .join("")
     .slice(0, 2)
@@ -84,12 +85,15 @@ function initials(firstName: string, lastName: string, company: string) {
 
   if (fromName) return fromName;
 
-  return company
-    .split(" ")
-    .map((word) => word[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase() || "TB";
+  return (
+    company
+      .split(" ")
+      .filter(Boolean)
+      .map((word) => word[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase() || "TB"
+  );
 }
 
 async function getCardBySlug(slug: string) {
@@ -242,7 +246,7 @@ export default async function DigitalCardPage({
               </div>
             </div>
 
-            {/* Adaptive logo plaque */}
+            {/* Adaptive luxury logo emblem */}
             <div className="relative mt-8">
               <div className="flex justify-end">
                 <div className="rounded-full border border-[#d4af37]/30 bg-[#0b1526]/80 px-3 py-2 text-[11px] font-bold text-white/85 shadow-lg shadow-black/40 backdrop-blur sm:px-4 sm:text-xs">
@@ -250,19 +254,27 @@ export default async function DigitalCardPage({
                 </div>
               </div>
 
-              <div className="mx-auto mt-5 max-w-[290px] rounded-[2rem] border border-[#d4af37]/70 bg-[#07101f]/85 p-[2px] shadow-[0_0_38px_rgba(212,175,55,0.32)]">
-                <div className="flex min-h-[128px] items-center justify-center rounded-[1.85rem] border border-white/10 bg-gradient-to-br from-[#111827]/90 via-[#02050d]/95 to-[#0b1627]/90 p-5 shadow-inner">
-                  {logo ? (
-                    <img
-                      src={logo}
-                      alt={`${company} logo`}
-                      className="max-h-[105px] max-w-full object-contain drop-shadow-[0_0_18px_rgba(255,255,255,0.18)]"
-                    />
-                  ) : (
-                    <span className="text-6xl font-black text-[#d4af37] drop-shadow-[0_0_14px_rgba(212,175,55,0.65)]">
-                      {fallbackInitials}
-                    </span>
-                  )}
+              <div className="relative mx-auto mt-4 flex max-w-[315px] justify-center">
+                <div className="absolute inset-x-8 top-1/2 h-16 -translate-y-1/2 rounded-full bg-[#0b7cff]/25 blur-2xl" />
+                <div className="absolute inset-x-10 top-1/2 h-16 -translate-y-1/2 rounded-full bg-[#d4af37]/25 blur-2xl" />
+
+                <div className="relative rounded-[999px] border border-[#d4af37]/80 bg-gradient-to-br from-[#f7d978]/80 via-[#6f5315]/40 to-[#07101f]/80 p-[2px] shadow-[0_0_45px_rgba(212,175,55,0.38)]">
+                  <div className="relative flex min-h-[132px] min-w-[245px] items-center justify-center overflow-hidden rounded-[999px] border border-white/10 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_30%),linear-gradient(135deg,#101827,#030711_60%,#111827)] px-8 py-5 shadow-inner">
+                    <div className="pointer-events-none absolute left-6 top-4 h-10 w-24 rotate-[-18deg] rounded-full bg-white/10 blur-xl" />
+                    <div className="pointer-events-none absolute bottom-3 right-7 h-10 w-28 rounded-full bg-[#d4af37]/12 blur-xl" />
+
+                    {logo ? (
+                      <img
+                        src={logo}
+                        alt={`${company} logo`}
+                        className="relative z-10 max-h-[96px] max-w-[210px] object-contain drop-shadow-[0_0_18px_rgba(255,255,255,0.22)]"
+                      />
+                    ) : (
+                      <span className="relative z-10 text-6xl font-black text-[#d4af37] drop-shadow-[0_0_16px_rgba(212,175,55,0.75)]">
+                        {fallbackInitials}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
