@@ -73,6 +73,25 @@ function logoPath(logo: string | null) {
   return `/${logo}`;
 }
 
+function initials(firstName: string, lastName: string, company: string) {
+  const fromName = `${firstName} ${lastName}`
+    .trim()
+    .split(" ")
+    .map((word) => word[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
+  if (fromName) return fromName;
+
+  return company
+    .split(" ")
+    .map((word) => word[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase() || "TB";
+}
+
 async function getCardBySlug(slug: string) {
   try {
     const [rows] = await db.query<CardRow[]>(
@@ -152,6 +171,7 @@ export default async function DigitalCardPage({
   const tiktok = normalizeUrl(card.tiktok);
   const locationUrl = normalizeUrl(card.location_url || "https://maps.google.com");
   const logo = logoPath(card.logo);
+  const fallbackInitials = initials(firstName, lastName, company);
 
   const contactButtons = [
     {
@@ -222,27 +242,27 @@ export default async function DigitalCardPage({
               </div>
             </div>
 
-            {/* Logo and NFC badge */}
-            <div className="relative mt-8 grid grid-cols-3 items-center">
-              <div />
-
-              <div className="mx-auto flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border border-[#d4af37] bg-gradient-to-br from-[#101826] via-[#02050d] to-[#111827] text-5xl font-black text-[#d4af37] shadow-[0_0_35px_rgba(212,175,55,0.45)]">
-                {logo ? (
-                  <img
-                    src={logo}
-                    alt={`${company} logo`}
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  <span className="drop-shadow-[0_0_12px_rgba(212,175,55,0.65)]">
-                    TB
-                  </span>
-                )}
-              </div>
-
+            {/* Adaptive logo plaque */}
+            <div className="relative mt-8">
               <div className="flex justify-end">
                 <div className="rounded-full border border-[#d4af37]/30 bg-[#0b1526]/80 px-3 py-2 text-[11px] font-bold text-white/85 shadow-lg shadow-black/40 backdrop-blur sm:px-4 sm:text-xs">
                   ))) NFC + QR Ready
+                </div>
+              </div>
+
+              <div className="mx-auto mt-5 max-w-[290px] rounded-[2rem] border border-[#d4af37]/70 bg-[#07101f]/85 p-[2px] shadow-[0_0_38px_rgba(212,175,55,0.32)]">
+                <div className="flex min-h-[128px] items-center justify-center rounded-[1.85rem] border border-white/10 bg-gradient-to-br from-[#111827]/90 via-[#02050d]/95 to-[#0b1627]/90 p-5 shadow-inner">
+                  {logo ? (
+                    <img
+                      src={logo}
+                      alt={`${company} logo`}
+                      className="max-h-[105px] max-w-full object-contain drop-shadow-[0_0_18px_rgba(255,255,255,0.18)]"
+                    />
+                  ) : (
+                    <span className="text-6xl font-black text-[#d4af37] drop-shadow-[0_0_14px_rgba(212,175,55,0.65)]">
+                      {fallbackInitials}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
