@@ -158,70 +158,75 @@ export default async function DigitalCardPage({
       label: "Call Now",
       icon: "☎",
       href: phone ? `tel:${phone}` : "#",
-      color: "text-[#ffd36b]",
-      glow: "shadow-[#d4af37]/30",
+      iconColor: "text-[#ffd36b]",
+      iconGlow: "shadow-[#d4af37]/40",
     },
     {
       label: "WhatsApp",
       icon: "☘",
       href: whatsapp ? `https://wa.me/${whatsapp}` : "#",
-      color: "text-[#31e981]",
-      glow: "shadow-[#31e981]/25",
+      iconColor: "text-[#2df079]",
+      iconGlow: "shadow-[#2df079]/35",
     },
     {
       label: "Email",
       icon: "✉",
       href: email ? `mailto:${email}` : "#",
-      color: "text-[#5bbcff]",
-      glow: "shadow-[#5bbcff]/25",
+      iconColor: "text-[#5ab8ff]",
+      iconGlow: "shadow-[#5ab8ff]/35",
     },
     {
       label: "Save Contact",
       icon: "👤",
       href: `/api/vcard/${card.slug}`,
-      color: "text-[#8ea2ff]",
-      glow: "shadow-[#8ea2ff]/25",
+      iconColor: "text-[#8ea2ff]",
+      iconGlow: "shadow-[#8ea2ff]/35",
     },
     {
       label: "Visit Website",
       icon: "◎",
       href: website,
-      color: "text-[#29b6ff]",
-      glow: "shadow-[#29b6ff]/25",
+      iconColor: "text-[#23b8ff]",
+      iconGlow: "shadow-[#23b8ff]/35",
     },
     {
       label: "Location",
       icon: "●",
       href: locationUrl,
-      color: "text-[#ff4b4b]",
-      glow: "shadow-[#ff4b4b]/25",
+      iconColor: "text-[#ff4545]",
+      iconGlow: "shadow-[#ff4545]/35",
     },
   ];
 
   const shareText = encodeURIComponent(
-    `View ${fullName}'s Trinibuzz Tap Card: https://contact.trinibuzz.com/card/${card.slug}`
+    `View ${fullName}'s Trinibuzz Tap Card: https://contact.trinibuzz.com/${card.slug}`
   );
 
   return (
-    <main className="min-h-screen bg-[#02050d] px-4 py-6 text-white">
-      <div className="mx-auto max-w-[520px]">
-        <div className="relative overflow-hidden rounded-[2.4rem] border border-[#d4af37]/70 bg-[#050b18] p-4 shadow-2xl shadow-[#d4af37]/15">
-          <div className="pointer-events-none absolute inset-0 rounded-[2.4rem] bg-[radial-gradient(circle_at_top_left,_rgba(212,175,55,0.22),_transparent_35%),radial-gradient(circle_at_center,_rgba(0,102,255,0.20),_transparent_35%),radial-gradient(circle_at_bottom,_rgba(212,175,55,0.12),_transparent_35%)]" />
+    <main className="min-h-screen bg-[#01040b] px-3 py-5 text-white">
+      <div className="mx-auto max-w-[560px]">
+        <div className="relative overflow-hidden rounded-[2.8rem] border border-[#d4af37]/75 bg-[#050b16] p-[3px] shadow-2xl shadow-[#d4af37]/20">
+          <div className="absolute inset-0 rounded-[2.8rem] bg-gradient-to-br from-[#d4af37]/70 via-[#0c2448]/40 to-[#d4af37]/30 opacity-70" />
 
-          <div className="pointer-events-none absolute left-[-20%] top-[7%] h-[160px] w-[140%] rotate-[-12deg] border-t border-[#d4af37]/35" />
-          <div className="pointer-events-none absolute left-[-20%] top-[13%] h-[180px] w-[140%] rotate-[-12deg] border-t border-[#1f8bff]/40" />
+          <div className="relative overflow-hidden rounded-[2.65rem] bg-[#040914] px-5 pb-6 pt-6 shadow-inner">
+            {/* Background effects */}
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_8%,rgba(212,175,55,0.28),transparent_24%),radial-gradient(circle_at_50%_18%,rgba(0,103,255,0.35),transparent_28%),radial-gradient(circle_at_85%_12%,rgba(212,175,55,0.13),transparent_20%),radial-gradient(circle_at_bottom,rgba(212,175,55,0.16),transparent_32%)]" />
+            <div className="pointer-events-none absolute -left-24 top-28 h-36 w-[760px] -rotate-12 rounded-full border-t border-[#d4af37]/35" />
+            <div className="pointer-events-none absolute -left-28 top-36 h-40 w-[780px] -rotate-12 rounded-full border-t border-[#138bff]/45" />
+            <div className="pointer-events-none absolute right-0 top-0 h-72 w-52 bg-[radial-gradient(circle,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:10px_10px] opacity-35" />
 
-          <div className="relative rounded-[2rem] border border-white/10 bg-black/20 px-4 py-5 backdrop-blur">
-            <div className="flex justify-center">
-              <div className="rounded-full border border-[#d4af37]/40 bg-[#07101f]/80 px-5 py-2 text-xs font-black uppercase tracking-[0.35em] text-[#d4af37] shadow-lg shadow-[#d4af37]/10">
+            {/* Top badge */}
+            <div className="relative flex justify-center">
+              <div className="rounded-full border border-[#d4af37]/35 bg-[#071325]/80 px-6 py-2 text-xs font-black uppercase tracking-[0.38em] text-[#e6c35a] shadow-lg shadow-black/40 backdrop-blur">
                 • Trinibuzz Tap Card •
               </div>
             </div>
 
-            <div className="mt-7 flex items-center justify-between gap-3">
+            {/* Logo and NFC badge */}
+            <div className="relative mt-8 grid grid-cols-3 items-center">
               <div />
 
-              <div className="flex h-28 w-28 items-center justify-center overflow-hidden rounded-full border border-[#d4af37] bg-gradient-to-br from-[#07101f] to-[#02050d] text-4xl font-black text-[#d4af37] shadow-2xl shadow-[#d4af37]/35">
+              <div className="mx-auto flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border border-[#d4af37] bg-gradient-to-br from-[#101826] via-[#02050d] to-[#111827] text-5xl font-black text-[#d4af37] shadow-[0_0_35px_rgba(212,175,55,0.45)]">
                 {logo ? (
                   <img
                     src={logo}
@@ -229,34 +234,42 @@ export default async function DigitalCardPage({
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  "TB"
+                  <span className="drop-shadow-[0_0_12px_rgba(212,175,55,0.65)]">
+                    TB
+                  </span>
                 )}
               </div>
 
-              <div className="rounded-full border border-white/15 bg-white/8 px-4 py-2 text-xs font-bold text-white/85 shadow-lg shadow-black/30 backdrop-blur">
-                NFC + QR Ready
+              <div className="flex justify-end">
+                <div className="rounded-full border border-[#d4af37]/30 bg-[#0b1526]/80 px-3 py-2 text-[11px] font-bold text-white/85 shadow-lg shadow-black/40 backdrop-blur sm:px-4 sm:text-xs">
+                  ))) NFC + QR Ready
+                </div>
               </div>
             </div>
 
-            <div className="mt-6 text-center">
-              <h1 className="text-4xl font-black tracking-tight md:text-5xl">
+            {/* Name */}
+            <div className="relative mt-7 text-center">
+              <h1 className="text-4xl font-black tracking-tight text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.18)] sm:text-5xl">
                 {fullName}
               </h1>
 
-              <div className="mt-3 flex items-center justify-center gap-4">
-                <span className="h-px w-10 bg-[#d4af37]" />
-                <p className="text-2xl font-black text-[#d4af37]">{company}</p>
-                <span className="h-px w-10 bg-[#d4af37]" />
+              <div className="mt-4 flex items-center justify-center gap-4">
+                <span className="h-px w-12 bg-gradient-to-r from-transparent to-[#d4af37]" />
+                <p className="text-2xl font-black text-[#d4af37] drop-shadow-[0_0_10px_rgba(212,175,55,0.35)]">
+                  {company}
+                </p>
+                <span className="h-px w-12 bg-gradient-to-l from-transparent to-[#d4af37]" />
               </div>
 
               <p className="mt-3 text-base text-white/55">{title}</p>
 
-              <p className="mx-auto mt-6 max-w-[410px] text-base leading-8 text-white/70">
+              <p className="mx-auto mt-6 max-w-[430px] text-base leading-8 text-white/72">
                 {bio}
               </p>
             </div>
 
-            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {/* Contact buttons */}
+            <div className="relative mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {contactButtons.map((button) => (
                 <a
                   key={button.label}
@@ -267,74 +280,90 @@ export default async function DigitalCardPage({
                       ? "noopener noreferrer"
                       : undefined
                   }
-                  className="group flex items-center justify-between rounded-2xl border border-white/15 bg-[#07101f]/90 px-4 py-4 shadow-lg shadow-black/30 transition hover:border-[#d4af37]/70 hover:bg-[#0b1730]"
+                  className="group flex min-h-[86px] items-center justify-between rounded-3xl border border-white/14 bg-[#071426]/88 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_10px_28px_rgba(0,0,0,0.35)] transition hover:border-[#d4af37]/80 hover:bg-[#0b1a30]"
                 >
                   <span className="flex items-center gap-4">
                     <span
-                      className={`flex h-14 w-14 items-center justify-center rounded-full border border-[#d4af37]/50 bg-black/35 text-2xl ${button.color} shadow-lg ${button.glow}`}
+                      className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#d4af37]/55 bg-black/35 text-2xl ${button.iconColor} shadow-lg ${button.iconGlow}`}
                     >
                       {button.icon}
                     </span>
-                    <span className="text-lg font-black">{button.label}</span>
+
+                    <span className="text-lg font-black text-white">
+                      {button.label}
+                    </span>
                   </span>
-                  <span className="text-3xl text-[#d4af37] transition group-hover:translate-x-1">
+
+                  <span className="text-4xl leading-none text-[#d4af37] transition group-hover:translate-x-1">
                     ›
                   </span>
                 </a>
               ))}
             </div>
 
-            <div className="mt-5 grid grid-cols-3 overflow-hidden rounded-2xl border border-white/15 bg-[#06101f]/90">
+            {/* Social bar */}
+            <div className="relative mt-5 grid grid-cols-3 overflow-hidden rounded-3xl border border-white/15 bg-[#06101f]/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_10px_28px_rgba(0,0,0,0.35)]">
               <a
                 href={instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 border-r border-white/15 px-2 py-4 text-sm font-bold text-white/75 hover:text-[#d4af37]"
+                className="flex items-center justify-center gap-2 border-r border-white/15 px-2 py-5 text-sm font-bold text-white/75 transition hover:text-[#d4af37]"
               >
-                <span className="text-2xl">📸</span> Instagram
+                <span className="text-2xl">📸</span>
+                <span className="hidden sm:inline">Instagram</span>
+                <span className="sm:hidden">IG</span>
               </a>
 
               <a
                 href={facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 border-r border-white/15 px-2 py-4 text-sm font-bold text-white/75 hover:text-[#d4af37]"
+                className="flex items-center justify-center gap-2 border-r border-white/15 px-2 py-5 text-sm font-bold text-white/75 transition hover:text-[#d4af37]"
               >
-                <span className="text-2xl">f</span> Facebook
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#1877f2] text-lg font-black text-white">
+                  f
+                </span>
+                <span className="hidden sm:inline">Facebook</span>
+                <span className="sm:hidden">FB</span>
               </a>
 
               <a
                 href={tiktok}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 px-2 py-4 text-sm font-bold text-white/75 hover:text-[#d4af37]"
+                className="flex items-center justify-center gap-2 px-2 py-5 text-sm font-bold text-white/75 transition hover:text-[#d4af37]"
               >
-                <span className="text-2xl">♪</span> TikTok
+                <span className="text-2xl">♪</span>
+                <span>TikTok</span>
               </a>
             </div>
 
+            {/* Info page button */}
             {card.info_page_enabled === 1 && (
               <a
                 href={`/card/${card.slug}/info`}
-                className="mt-5 flex items-center justify-between rounded-2xl border border-[#d4af37] bg-gradient-to-r from-[#d4af37] via-[#f2c85b] to-[#b88918] px-5 py-5 text-[#07101f] shadow-xl shadow-[#d4af37]/25 transition hover:scale-[1.01]"
+                className="relative mt-5 flex items-center justify-between rounded-3xl border border-[#ffe28a]/70 bg-gradient-to-r from-[#d4af37] via-[#ffe081] to-[#b88918] px-5 py-5 text-[#07101f] shadow-[0_0_28px_rgba(212,175,55,0.35)] transition hover:scale-[1.01]"
               >
                 <span className="flex items-center gap-4">
-                  <span className="flex h-14 w-14 items-center justify-center rounded-full border border-black/25 bg-[#07101f] text-2xl text-[#d4af37]">
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-black/25 bg-[#07101f] text-2xl text-[#d4af37] shadow-lg shadow-black/30">
                     ↗
                   </span>
-                  <span className="text-xl font-black">
+
+                  <span className="text-lg font-black sm:text-xl">
                     Learn More / Services Page
                   </span>
                 </span>
-                <span className="text-4xl">›</span>
+
+                <span className="text-4xl leading-none">›</span>
               </a>
             )}
 
+            {/* Share */}
             <a
               href={`https://wa.me/?text=${shareText}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-5 flex w-full items-center justify-center gap-4 rounded-2xl border border-white/15 bg-[#07101f]/90 px-5 py-5 text-xl font-black text-white/85 shadow-lg shadow-black/30 transition hover:border-[#d4af37]/70 hover:text-[#d4af37]"
+              className="relative mt-5 flex w-full items-center justify-center gap-4 rounded-3xl border border-white/15 bg-[#071426]/90 px-5 py-5 text-xl font-black text-white/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_10px_28px_rgba(0,0,0,0.35)] transition hover:border-[#d4af37]/70 hover:text-[#d4af37]"
             >
               <span className="text-3xl text-[#77baff]">⇧</span>
               Share Profile
