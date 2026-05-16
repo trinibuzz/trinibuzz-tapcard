@@ -1,0 +1,26 @@
+export type Card = {
+  id: number;
+  user_id: number | null;
+  slug: string;
+  first_name: string | null;
+  last_name: string | null;
+  title: string | null;
+  company: string | null;
+  phone: string | null;
+  email: string | null;
+  website: string | null;
+  whatsapp: string | null;
+  instagram: string | null;
+  facebook: string | null;
+  tiktok: string | null;
+  logo: string | null;
+  views: number;
+  taps: number;
+  scans: number;
+  bio: string | null;
+  location_url: string | null;
+  package_name: string | null;
+  is_active: number;
+  info_page_enabled: number;
+  created_at: string;
+};
