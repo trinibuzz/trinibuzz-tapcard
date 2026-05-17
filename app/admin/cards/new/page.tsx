@@ -16,6 +16,7 @@ export default function AddNewCardPage() {
     company: "",
     title: "",
     slug: "",
+    logo: "",
     package_name: "Starter Digital Card",
     bio: "",
     phone: "",
@@ -30,10 +31,7 @@ export default function AddNewCardPage() {
     info_page_enabled: false,
   });
 
-  function updateField(
-    name: string,
-    value: string | boolean
-  ) {
+  function updateField(name: string, value: string | boolean) {
     setForm((current) => ({
       ...current,
       [name]: value,
@@ -125,8 +123,8 @@ export default function AddNewCardPage() {
             Add Client Tap Card
           </h1>
           <p className="mt-3 max-w-2xl text-white/60">
-            Create a new NFC / QR digital contact card. On your local computer,
-            saving may fail until the app is deployed to Hostinger with database access.
+            Create a new NFC / QR digital contact card. Add the logo path so the
+            customer logo appears instead of initials.
           </p>
         </div>
 
@@ -224,6 +222,39 @@ export default function AddNewCardPage() {
                   <option>Premium Tap Card + Info Page</option>
                 </select>
               </div>
+
+              <div className="md:col-span-2">
+                <label className="mb-2 block text-sm font-bold text-white/70">
+                  Logo URL / Logo Path
+                </label>
+                <input
+                  value={form.logo}
+                  onChange={(e) => updateField("logo", e.target.value)}
+                  placeholder="/uploads/logos/client-logo.png"
+                  className="w-full rounded-2xl border border-white/10 bg-[#050814] px-5 py-4 text-white outline-none placeholder:text-white/30 focus:border-[#d4af37]"
+                />
+                <p className="mt-2 text-xs leading-5 text-white/40">
+                  Example: <span className="text-[#d4af37]">/uploads/logos/logo.png</span>{" "}
+                  or a full image URL. Leave blank to show initials.
+                </p>
+              </div>
+
+              {form.logo && (
+                <div className="md:col-span-2">
+                  <div className="rounded-3xl border border-[#d4af37]/30 bg-[#07101f] p-5">
+                    <p className="mb-3 text-sm font-bold text-[#d4af37]">
+                      Logo Preview
+                    </p>
+                    <div className="flex min-h-28 items-center justify-center rounded-2xl border border-white/10 bg-[#050814] p-5">
+                      <img
+                        src={form.logo}
+                        alt="Logo preview"
+                        className="max-h-24 max-w-full object-contain"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <div className="md:col-span-2">
                 <label className="mb-2 block text-sm font-bold text-white/70">

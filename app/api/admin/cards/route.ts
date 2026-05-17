@@ -23,7 +23,8 @@ function normalizeUrl(value: string) {
     trimmed.startsWith("http://") ||
     trimmed.startsWith("https://") ||
     trimmed.startsWith("mailto:") ||
-    trimmed.startsWith("tel:")
+    trimmed.startsWith("tel:") ||
+    trimmed.startsWith("/")
   ) {
     return trimmed;
   }
@@ -103,6 +104,7 @@ export async function POST(request: Request) {
     const email = String(body.email || "").trim();
     const website = normalizeUrl(String(body.website || ""));
     const locationUrl = normalizeUrl(String(body.location_url || ""));
+    const logo = normalizeUrl(String(body.logo || ""));
 
     const instagram = normalizeUrl(String(body.instagram || ""));
     const facebook = normalizeUrl(String(body.facebook || ""));
@@ -194,7 +196,7 @@ export async function POST(request: Request) {
         instagram,
         facebook,
         tiktok,
-        "",
+        logo,
         bio,
         locationUrl,
         packageName,

@@ -23,7 +23,8 @@ function normalizeUrl(value: string) {
     trimmed.startsWith("http://") ||
     trimmed.startsWith("https://") ||
     trimmed.startsWith("mailto:") ||
-    trimmed.startsWith("tel:")
+    trimmed.startsWith("tel:") ||
+    trimmed.startsWith("/")
   ) {
     return trimmed;
   }
@@ -147,6 +148,7 @@ export async function PUT(
     const email = String(body.email || "").trim();
     const website = normalizeUrl(String(body.website || ""));
     const locationUrl = normalizeUrl(String(body.location_url || ""));
+    const logo = normalizeUrl(String(body.logo || ""));
 
     const instagram = normalizeUrl(String(body.instagram || ""));
     const facebook = normalizeUrl(String(body.facebook || ""));
@@ -216,6 +218,7 @@ export async function PUT(
         instagram = ?,
         facebook = ?,
         tiktok = ?,
+        logo = ?,
         bio = ?,
         location_url = ?,
         package_name = ?,
@@ -236,6 +239,7 @@ export async function PUT(
         instagram,
         facebook,
         tiktok,
+        logo,
         bio,
         locationUrl,
         packageName,
@@ -293,7 +297,6 @@ export async function DELETE(
       );
     }
 
-    // Soft deactivate instead of deleting, so old NFC/QR slugs are not destroyed.
     const [result] = await db.query<ResultSetHeader>(
       `
       UPDATE cards
