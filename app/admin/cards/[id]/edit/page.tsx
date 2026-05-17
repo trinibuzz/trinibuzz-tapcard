@@ -9,6 +9,7 @@ type CardForm = {
   company: string;
   title: string;
   slug: string;
+  logo: string;
   package_name: string;
   bio: string;
   phone: string;
@@ -29,6 +30,7 @@ const fallbackCard: CardForm = {
   company: "Trinibuzz Media",
   title: "Digital Media • NFC Cards • Promotions",
   slug: "keith",
+  logo: "",
   package_name: "Premium Tap Card + Info Page",
   bio: "Helping businesses and professionals share contact details, social links, websites, and services instantly with NFC tap cards and QR scan profiles.",
   phone: "18680000000",
@@ -90,6 +92,7 @@ export default function EditCardPage() {
           company: card.company || "",
           title: card.title || "",
           slug: card.slug || "",
+          logo: card.logo || "",
           package_name: card.package_name || "Starter Digital Card",
           bio: card.bio || "",
           phone: card.phone || "",
@@ -141,7 +144,7 @@ export default function EditCardPage() {
       setMessage(`Card updated successfully: /card/${data.slug}`);
     } catch (err) {
       setError(
-        "Could not save card. If you are testing locally, database may only work after deployment to Hostinger."
+        "Could not save card. If you are testing locally, the database may only work after deployment to Hostinger."
       );
     } finally {
       setSaving(false);
@@ -180,7 +183,7 @@ export default function EditCardPage() {
       }));
     } catch (err) {
       setError(
-        "Could not deactivate card. If you are testing locally, database may only work after deployment to Hostinger."
+        "Could not deactivate card. If you are testing locally, the database may only work after deployment to Hostinger."
       );
     } finally {
       setSaving(false);
@@ -220,11 +223,16 @@ export default function EditCardPage() {
           </p>
 
           <h1 className="mt-3 text-4xl font-black md:text-5xl">
-            {loading ? "Loading..." : `${form.first_name} ${form.last_name}`.trim() || form.company || "Edit Card"}
+            {loading
+              ? "Loading..."
+              : `${form.first_name} ${form.last_name}`.trim() ||
+                form.company ||
+                "Edit Card"}
           </h1>
 
           <p className="mt-3 max-w-2xl text-white/60">
-            Update client details, profile buttons, socials, and card settings.
+            Update client details, profile buttons, logo, socials, and card
+            settings.
           </p>
 
           <div className="mt-5 flex flex-wrap gap-3">
@@ -342,6 +350,45 @@ export default function EditCardPage() {
                   <option>Premium Tap Card + Info Page</option>
                 </select>
               </div>
+
+              <div className="md:col-span-2">
+                <label className="mb-2 block text-sm font-bold text-white/70">
+                  Logo URL / Logo Path
+                </label>
+
+                <input
+                  value={form.logo}
+                  onChange={(e) => updateField("logo", e.target.value)}
+                  placeholder="/uploads/logos/client-logo.png"
+                  className="w-full rounded-2xl border border-white/10 bg-[#050814] px-5 py-4 text-white outline-none placeholder:text-white/30 focus:border-[#d4af37]"
+                />
+
+                <p className="mt-2 text-xs leading-5 text-white/40">
+                  Example:{" "}
+                  <span className="text-[#d4af37]">
+                    /uploads/logos/logo.png
+                  </span>{" "}
+                  or a full image URL. Leave blank to show initials.
+                </p>
+              </div>
+
+              {form.logo && (
+                <div className="md:col-span-2">
+                  <div className="rounded-3xl border border-[#d4af37]/30 bg-[#07101f] p-5">
+                    <p className="mb-3 text-sm font-bold text-[#d4af37]">
+                      Logo Preview
+                    </p>
+
+                    <div className="flex min-h-28 items-center justify-center rounded-2xl border border-white/10 bg-[#050814] p-5">
+                      <img
+                        src={form.logo}
+                        alt="Logo preview"
+                        className="max-h-24 max-w-full object-contain"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <div className="md:col-span-2">
                 <label className="mb-2 block text-sm font-bold text-white/70">
