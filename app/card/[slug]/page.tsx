@@ -28,6 +28,14 @@ type CardRow = RowDataPacket & {
   info_page_enabled: number;
 };
 
+type ButtonIconName =
+  | "phone"
+  | "whatsapp"
+  | "email"
+  | "contact"
+  | "website"
+  | "location";
+
 const fallbackCards: CardRow[] = [
   {
     id: 1,
@@ -93,6 +101,120 @@ function initials(firstName: string, lastName: string, company: string) {
       .join("")
       .slice(0, 2)
       .toUpperCase() || "TB"
+  );
+}
+
+function ButtonIcon({ name }: { name: ButtonIconName }) {
+  const baseClass = "h-7 w-7";
+
+  if (name === "phone") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" className={baseClass}>
+        <path
+          d="M7.2 4.5 9.4 8c.4.6.3 1.4-.2 1.9l-1.1 1.1c1.3 2.6 3.4 4.7 6 6l1.1-1.1c.5-.5 1.3-.6 1.9-.2l3.4 2.2c.7.4 1 1.3.7 2.1-.5 1.2-1.7 2-3 2C9.3 22 2 14.7 2 5.8c0-1.3.8-2.5 2-3 .8-.3 1.7 0 2.1.7Z"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
+
+  if (name === "whatsapp") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" className={baseClass}>
+        <path
+          d="M4.2 20 5.4 16.5A8.2 8.2 0 1 1 8 19.1L4.2 20Z"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M9.1 8.5c.2-.4.4-.4.7-.4h.5c.2 0 .5.1.6.5l.6 1.4c.1.3.1.6-.1.8l-.4.5c.8 1.4 1.8 2.3 3.2 3l.5-.5c.2-.2.5-.3.8-.2l1.5.7c.3.2.5.4.5.7v.4c0 .4-.1.7-.4.9-.5.5-1.5.6-2.1.4-3.4-1-6-3.6-7.1-6.8-.2-.6 0-1.6.6-2.1Z"
+          fill="currentColor"
+        />
+      </svg>
+    );
+  }
+
+  if (name === "email") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" className={baseClass}>
+        <path
+          d="M4 6.5h16v11H4v-11Z"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinejoin="round"
+        />
+        <path
+          d="m4.7 7.2 7.3 5.5 7.3-5.5"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
+
+  if (name === "contact") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" className={baseClass}>
+        <path
+          d="M7 3.5h10A2.5 2.5 0 0 1 19.5 6v12A2.5 2.5 0 0 1 17 20.5H7A2.5 2.5 0 0 1 4.5 18V6A2.5 2.5 0 0 1 7 3.5Z"
+          stroke="currentColor"
+          strokeWidth="1.8"
+        />
+        <path
+          d="M9 15.8c.7-1.3 1.7-2 3-2s2.3.7 3 2"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
+        <path
+          d="M12 11.6a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
+          stroke="currentColor"
+          strokeWidth="1.8"
+        />
+      </svg>
+    );
+  }
+
+  if (name === "website") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" className={baseClass}>
+        <path
+          d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"
+          stroke="currentColor"
+          strokeWidth="1.8"
+        />
+        <path
+          d="M3.6 9h16.8M3.6 15h16.8M12 3c2.2 2.4 3.3 5.4 3.3 9s-1.1 6.6-3.3 9c-2.2-2.4-3.3-5.4-3.3-9S9.8 5.4 12 3Z"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={baseClass}>
+      <path
+        d="M12 21s6-5.3 6-11A6 6 0 1 0 6 10c0 5.7 6 11 6 11Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 12.2a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
+    </svg>
   );
 }
 
@@ -177,48 +299,54 @@ export default async function DigitalCardPage({
   const logo = logoPath(card.logo);
   const fallbackInitials = initials(firstName, lastName, company);
 
-  const contactButtons = [
+  const contactButtons: {
+    label: string;
+    icon: ButtonIconName;
+    href: string;
+    accent: string;
+    glow: string;
+  }[] = [
     {
       label: "Call Now",
-      icon: "☎",
+      icon: "phone",
       href: phone ? `tel:${phone}` : "#",
-      iconColor: "text-[#ffd36b]",
-      iconGlow: "shadow-[#d4af37]/40",
+      accent: "text-[#ffd36b]",
+      glow: "shadow-[#d4af37]/40",
     },
     {
       label: "WhatsApp",
-      icon: "☘",
+      icon: "whatsapp",
       href: whatsapp ? `https://wa.me/${whatsapp}` : "#",
-      iconColor: "text-[#2df079]",
-      iconGlow: "shadow-[#2df079]/35",
+      accent: "text-[#2df079]",
+      glow: "shadow-[#2df079]/35",
     },
     {
       label: "Email",
-      icon: "✉",
+      icon: "email",
       href: email ? `mailto:${email}` : "#",
-      iconColor: "text-[#5ab8ff]",
-      iconGlow: "shadow-[#5ab8ff]/35",
+      accent: "text-[#5ab8ff]",
+      glow: "shadow-[#5ab8ff]/35",
     },
     {
       label: "Save Contact",
-      icon: "👤",
+      icon: "contact",
       href: `/api/vcard/${card.slug}`,
-      iconColor: "text-[#8ea2ff]",
-      iconGlow: "shadow-[#8ea2ff]/35",
+      accent: "text-[#8ea2ff]",
+      glow: "shadow-[#8ea2ff]/35",
     },
     {
       label: "Visit Website",
-      icon: "◎",
+      icon: "website",
       href: website,
-      iconColor: "text-[#23b8ff]",
-      iconGlow: "shadow-[#23b8ff]/35",
+      accent: "text-[#23b8ff]",
+      glow: "shadow-[#23b8ff]/35",
     },
     {
       label: "Location",
-      icon: "●",
+      icon: "location",
       href: locationUrl,
-      iconColor: "text-[#ff4545]",
-      iconGlow: "shadow-[#ff4545]/35",
+      accent: "text-[#ff4545]",
+      glow: "shadow-[#ff4545]/35",
     },
   ];
 
@@ -233,20 +361,17 @@ export default async function DigitalCardPage({
           <div className="absolute inset-0 rounded-[2.8rem] bg-gradient-to-br from-[#d4af37]/70 via-[#0c2448]/40 to-[#d4af37]/30 opacity-70" />
 
           <div className="relative overflow-hidden rounded-[2.65rem] bg-[#040914] px-5 pb-6 pt-6 shadow-inner">
-            {/* Background effects */}
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_8%,rgba(212,175,55,0.28),transparent_24%),radial-gradient(circle_at_50%_18%,rgba(0,103,255,0.35),transparent_28%),radial-gradient(circle_at_85%_12%,rgba(212,175,55,0.13),transparent_20%),radial-gradient(circle_at_bottom,rgba(212,175,55,0.16),transparent_32%)]" />
             <div className="pointer-events-none absolute -left-24 top-28 h-36 w-[760px] -rotate-12 rounded-full border-t border-[#d4af37]/35" />
             <div className="pointer-events-none absolute -left-28 top-36 h-40 w-[780px] -rotate-12 rounded-full border-t border-[#138bff]/45" />
             <div className="pointer-events-none absolute right-0 top-0 h-72 w-52 bg-[radial-gradient(circle,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:10px_10px] opacity-35" />
 
-            {/* Top badge */}
             <div className="relative flex justify-center">
               <div className="rounded-full border border-[#d4af37]/35 bg-[#071325]/80 px-6 py-2 text-xs font-black uppercase tracking-[0.38em] text-[#e6c35a] shadow-lg shadow-black/40 backdrop-blur">
                 • Trinibuzz Tap Card •
               </div>
             </div>
 
-            {/* Adaptive luxury logo emblem */}
             <div className="relative mt-8">
               <div className="flex justify-end">
                 <div className="rounded-full border border-[#d4af37]/30 bg-[#0b1526]/80 px-3 py-2 text-[11px] font-bold text-white/85 shadow-lg shadow-black/40 backdrop-blur sm:px-4 sm:text-xs">
@@ -279,7 +404,6 @@ export default async function DigitalCardPage({
               </div>
             </div>
 
-            {/* Name */}
             <div className="relative mt-7 text-center">
               <h1 className="text-4xl font-black tracking-tight text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.18)] sm:text-5xl">
                 {fullName}
@@ -300,7 +424,6 @@ export default async function DigitalCardPage({
               </p>
             </div>
 
-            {/* Contact buttons */}
             <div className="relative mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {contactButtons.map((button) => (
                 <a
@@ -312,13 +435,17 @@ export default async function DigitalCardPage({
                       ? "noopener noreferrer"
                       : undefined
                   }
-                  className="group flex min-h-[86px] items-center justify-between rounded-3xl border border-white/14 bg-[#071426]/88 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_10px_28px_rgba(0,0,0,0.35)] transition hover:border-[#d4af37]/80 hover:bg-[#0b1a30]"
+                  className="group relative flex min-h-[88px] items-center justify-between overflow-hidden rounded-3xl border border-white/14 bg-[#071426]/90 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_12px_30px_rgba(0,0,0,0.38)] transition hover:-translate-y-0.5 hover:border-[#d4af37]/85 hover:bg-[#0c1d36]"
                 >
-                  <span className="flex items-center gap-4">
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
+                  <div className="pointer-events-none absolute -left-12 top-0 h-full w-20 rotate-12 bg-white/5 blur-xl transition group-hover:left-full" />
+
+                  <span className="relative z-10 flex items-center gap-4">
                     <span
-                      className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[#d4af37]/55 bg-black/35 text-2xl ${button.iconColor} shadow-lg ${button.iconGlow}`}
+                      className={`relative flex h-15 w-15 shrink-0 items-center justify-center rounded-2xl border border-[#d4af37]/55 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_35%),linear-gradient(135deg,#111827,#02050d)] p-3 ${button.accent} shadow-lg ${button.glow}`}
                     >
-                      {button.icon}
+                      <span className="absolute inset-0 rounded-2xl border border-white/10" />
+                      <ButtonIcon name={button.icon} />
                     </span>
 
                     <span className="text-lg font-black text-white">
@@ -326,14 +453,13 @@ export default async function DigitalCardPage({
                     </span>
                   </span>
 
-                  <span className="text-4xl leading-none text-[#d4af37] transition group-hover:translate-x-1">
+                  <span className="relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-[#d4af37]/40 bg-[#d4af37]/10 text-3xl leading-none text-[#d4af37] transition group-hover:translate-x-1 group-hover:bg-[#d4af37] group-hover:text-[#07101f]">
                     ›
                   </span>
                 </a>
               ))}
             </div>
 
-            {/* Social bar */}
             <div className="relative mt-5 grid grid-cols-3 overflow-hidden rounded-3xl border border-white/15 bg-[#06101f]/95 shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_10px_28px_rgba(0,0,0,0.35)]">
               <a
                 href={instagram}
@@ -370,14 +496,13 @@ export default async function DigitalCardPage({
               </a>
             </div>
 
-            {/* Info page button */}
             {card.info_page_enabled === 1 && (
               <a
                 href={`/card/${card.slug}/info`}
                 className="relative mt-5 flex items-center justify-between rounded-3xl border border-[#ffe28a]/70 bg-gradient-to-r from-[#d4af37] via-[#ffe081] to-[#b88918] px-5 py-5 text-[#07101f] shadow-[0_0_28px_rgba(212,175,55,0.35)] transition hover:scale-[1.01]"
               >
                 <span className="flex items-center gap-4">
-                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-black/25 bg-[#07101f] text-2xl text-[#d4af37] shadow-lg shadow-black/30">
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-black/25 bg-[#07101f] text-2xl text-[#d4af37] shadow-lg shadow-black/30">
                     ↗
                   </span>
 
@@ -390,7 +515,6 @@ export default async function DigitalCardPage({
               </a>
             )}
 
-            {/* Share */}
             <a
               href={`https://wa.me/?text=${shareText}`}
               target="_blank"
